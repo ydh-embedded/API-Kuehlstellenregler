@@ -234,6 +234,11 @@ open_shell() {
 # ── Update ────────────────────────────────────────────────────────────────────
 update_container() {
     log_section "Container aktualisieren"
+    # Altes Image entfernen damit kein Build-Cache verwendet wird
+    if podman image exists "${IMAGE_NAME}:latest" 2>/dev/null; then
+        log_info "Entferne altes Image '${IMAGE_NAME}:latest' (kein Cache)..."
+        podman rmi -f "${IMAGE_NAME}:latest" &>/dev/null || true
+    fi
     build_image
     start_container
 }
