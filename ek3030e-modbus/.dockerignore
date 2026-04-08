@@ -1,0 +1,34 @@
+# Entwicklungs-Artefakte
+node_modules/
+dist/
+.manus-logs/
+
+# Versionskontrolle
+.git/
+.gitignore
+
+# Umgebungsdateien (werden zur Laufzeit übergeben)
+.env
+.env.local
+.env.*.local
+
+# Logs und temporäre Dateien
+*.log
+*.pid
+tmp/
+temp/
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Tests (nicht im Produktions-Image nötig)
+**/*.test.ts
+**/*.spec.ts
+coverage/
