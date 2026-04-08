@@ -25,6 +25,9 @@ COPY . .
 # Frontend bauen (Vite) + Server-Bundle (esbuild)
 RUN pnpm build
 
+# print_dashboard.html in den statischen Output-Ordner kopieren
+RUN cp print_dashboard.html dist/public/print_dashboard.html
+
 # ── Stage 2: Runtime ──────────────────────────────────────────────────────────
 FROM node:22-slim AS runtime
 
