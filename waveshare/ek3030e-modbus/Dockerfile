@@ -25,8 +25,12 @@ COPY . .
 # Frontend bauen (Vite) + Server-Bundle (esbuild)
 RUN pnpm build
 
-# print_dashboard.html in den statischen Output-Ordner kopieren
-RUN cp print_dashboard.html dist/public/print_dashboard.html
+# print_dashboard.html explizit sichern – aus client/public/ (Vite-Quelle) und Projektwurzel als Fallback
+RUN if [ -f client/public/print_dashboard.html ]; then \
+      cp client/public/print_dashboard.html dist/public/print_dashboard.html; \
+    elif [ -f print_dashboard.html ]; then \
+      cp print_dashboard.html dist/public/print_dashboard.html; \
+    fi && echo "print_dashboard.html: $(ls -la dist/public/print_dashboard.html 2>/dev/null || echo 'NICHT GEFUNDEN')"
 
 # ── Stage 2: Runtime ──────────────────────────────────────────────────────────
 FROM node:22-slim AS runtime
