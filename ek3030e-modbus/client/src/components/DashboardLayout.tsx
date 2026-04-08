@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { Activity, LogOut, PanelLeft, Settings, Sliders, Thermometer } from "lucide-react";
+import { Activity, LogOut, PanelLeft, Printer, Settings, Sliders, Thermometer } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -31,6 +31,10 @@ const menuItems = [
   { icon: Activity, label: "Dashboard", path: "/" },
   { icon: Sliders, label: "Einstellungen schreiben", path: "/settings" },
   { icon: Settings, label: "Gateway-Konfiguration", path: "/gateway" },
+];
+
+const externalItems = [
+  { icon: Printer, label: "Registerübersicht drucken", href: "/print_dashboard.html" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -190,6 +194,25 @@ function DashboardLayoutContent({ children, setSidebarWidth }: DashboardLayoutCo
                   </SidebarMenuItem>
                 );
               })}
+            </SidebarMenu>
+
+            {/* Trennlinie + externe Links */}
+            <div className="mx-3 my-1 border-t border-sidebar-border" />
+            <SidebarMenu className="px-2 py-1">
+              {externalItems.map(item => (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton
+                    asChild
+                    tooltip={item.label}
+                    className="h-10 transition-all font-normal"
+                  >
+                    <a href={item.href} target="_blank" rel="noopener noreferrer">
+                      <item.icon className="h-4 w-4 text-sidebar-foreground/70" />
+                      <span className="text-sidebar-foreground/80">{item.label}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarContent>
 
